@@ -148,7 +148,8 @@ export function validateGeoFirestoreObject(geoFirestoreObj: GeoFirestoreObj, fla
   error = (!validateGeohash(geoFirestoreObj.g, true)) ? 'invalid geohash on object' : null;
   error = (!validateLocation(geoFirestoreObj.l, true)) ? 'invalid location on object' : error;
 
-  if (!geoFirestoreObj || !('d' in geoFirestoreObj) || typeof geoFirestoreObj.d !== 'object') {
+  // if (!geoFirestoreObj || !('d' in geoFirestoreObj) || typeof geoFirestoreObj.d !== 'object') {
+  if (!geoFirestoreObj) {
     error = 'no valid document found';
   }
 
@@ -456,7 +457,8 @@ export function encodeGeoFireObject(location: firestore.GeoPoint | firestore.clo
  */
 export function decodeGeoFirestoreObject(geoFirestoreObj: GeoFirestoreObj): any {
   if (validateGeoFirestoreObject(geoFirestoreObj, true)) {
-    return geoFirestoreObj.d;
+    return geoFirestoreObj;
+    // return geoFirestoreObj.d;
   } else {
     throw new Error('Unexpected location object encountered: ' + JSON.stringify(geoFirestoreObj));
   }

@@ -244,7 +244,8 @@ export class GeoFirestoreQuery {
    */
   private _childAddedCallback(locationDataSnapshot: firestore.DocumentSnapshot | firestore.cloud.DocumentSnapshot): void {
     const data: GeoFirestoreObj = (locationDataSnapshot.exists) ? locationDataSnapshot.data() as GeoFirestoreObj : null;
-    const document: any = (data && validateGeoFirestoreObject(data)) ? data.d : null;
+    const document: any = (data && validateGeoFirestoreObject(data)) ? data : null;
+    // const document: any = (data && validateGeoFirestoreObject(data)) ? data.d : null;
     const location: firestore.GeoPoint | firestore.cloud.GeoPoint = (data && validateLocation(data.l)) ? data.l : null;
     this._updateLocation(geoFirestoreGetKey(locationDataSnapshot), location, document);
   }
@@ -256,7 +257,8 @@ export class GeoFirestoreQuery {
    */
   private _childChangedCallback(locationDataSnapshot: firestore.DocumentSnapshot | firestore.cloud.DocumentSnapshot): void {
     const data: GeoFirestoreObj = (locationDataSnapshot.exists) ? locationDataSnapshot.data() as GeoFirestoreObj : null;
-    const document: any = (data && validateGeoFirestoreObject(data)) ? data.d : null;
+    const document: any = (data && validateGeoFirestoreObject(data)) ? data : null;
+    // const document: any = (data && validateGeoFirestoreObject(data)) ? data.d : null;
     const location: firestore.GeoPoint | firestore.cloud.GeoPoint = (data && validateLocation(data.l)) ? data.l : null;
     this._updateLocation(geoFirestoreGetKey(locationDataSnapshot), location, document, true);
   }
@@ -272,7 +274,8 @@ export class GeoFirestoreQuery {
       const promise: Promise<firestore.DocumentSnapshot> = this._collectionRef.doc($key).get() as Promise<firestore.DocumentSnapshot>;
       promise.then((snapshot: firestore.DocumentSnapshot | firestore.cloud.DocumentSnapshot) => {
         const data: GeoFirestoreObj = (snapshot.exists) ? snapshot.data() as GeoFirestoreObj : null;
-        const document: any = (data && validateGeoFirestoreObject(data)) ? data.d : null;
+        const document: any = (data && validateGeoFirestoreObject(data)) ? data : null;
+        // const document: any = (data && validateGeoFirestoreObject(data)) ? data.d : null;
         const location: firestore.GeoPoint | firestore.cloud.GeoPoint = (data && validateLocation(data.l)) ? data.l : null;
         const geohash: string = (location !== null) ? encodeGeohash(location) : null;
         // Only notify observers if key is not part of any other geohash query or this actually might not be
